@@ -1,12 +1,16 @@
-import React from 'react';
+//server component, can be an Async function, that is why it can fetch data successively
+import React, { Suspense } from 'react';
 import { Briefcase } from 'lucide-react';
 import Link from 'next/link';
-import { Button } from './ui/button';
+import NavBarSideEffect from './nav-bar-side-effect';
+
+//import { getSession } from '@/lib/auth/auth';
 
 const Navbar = () => {
+  //const session = await getSession();
   return (
-    <nav className="border-b border-gray-200 bg-white">
-      <div className="container mx-auto flex h-16 items-center px-4 justify-between">
+    <nav className="border-b border-gray-200 bg-white ">
+      <div className=" mx-auto flex h-16 items-center px-4 justify-between">
         <Link
           href="/"
           className="flex items-center gap-2 font-semibold text-primary"
@@ -14,18 +18,9 @@ const Navbar = () => {
           <Briefcase />
           Job Tracker
         </Link>
-        <div className="flex items-center gap-4">
-          <Link href="/sign-in">
-            <Button variant="ghost" className="text-gray-700 hover:text-black">
-              Log In
-            </Button>
-          </Link>
-          <Link href="/sign-up">
-            <Button className="bg-primary hover:bg-primary/90">
-              Start for free
-            </Button>
-          </Link>
-        </div>
+        <Suspense fallback={<p>Loading...</p>}>
+          <NavBarSideEffect />
+        </Suspense>
       </div>
     </nav>
   );

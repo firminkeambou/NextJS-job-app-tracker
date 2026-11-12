@@ -1,4 +1,5 @@
 /* all this below is a boiler plate, same for every project */
+//it separates mongoose connection with with those of better-auth whuich uses mongoClient
 import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
