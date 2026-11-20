@@ -41,7 +41,7 @@ const SignIn = () => {
         setError(result.error.message ?? 'Failed to sign In');
       } else {
         router.push('/dashboard');
-        router.refresh(); // to for the the whole NabBar which is a server component to re-render
+        router.refresh(); //  for the the whole NabBar which is a server component to re-render
       }
     } catch (err) {
       setError('An unexpected error occurred');

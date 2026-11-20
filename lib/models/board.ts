@@ -3,7 +3,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 export interface IBoard extends Document {
   name: string;
   userId: string;
-  columns: mongoose.Types.ObjectId[];
+  columns: mongoose.Types.ObjectId[]; // this will list the list of Id of other collection attached to the board
   createdAt: Date;
   updatedAt: Date;
 }
@@ -22,7 +22,7 @@ const BoardSchema = new Schema<IBoard>(
     columns: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Column', // this is like foreign key in relational database
+        ref: 'Column', // this is like foreign key in relational database, another collection
       },
     ],
   },
@@ -31,8 +31,9 @@ const BoardSchema = new Schema<IBoard>(
     timestamps: true,
   },
 );
+//registring the model
 export default mongoose.models.Board ||
-  mongoose.model<IBoard>('Board', BoardSchema);
+  mongoose.model<IBoard>('Board', BoardSchema); // Board=== name given (pointer to reference Schema) and has nothing to do with  the interface
 /*
 • mongoose.models.Board: Checks if a model named Board has already been compiled and registered in Mongoose's internal cache.
 • || (Logical OR): Returns the existing cached model if it exists, skipping the second half of the expression.

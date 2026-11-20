@@ -42,6 +42,7 @@ const SignUp = () => {
         setError(result.error.message ?? 'Failed to sign up');
       } else {
         router.push('/dashboard');
+        router.refresh(); //  for the the whole NabBar which is a server component to re-render
       }
     } catch (err) {
       setError('An unexpected error occurred');

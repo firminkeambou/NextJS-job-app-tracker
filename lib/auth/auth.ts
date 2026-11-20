@@ -1,8 +1,12 @@
+/*In Better Auth, databaseHooks let you run custom logic before or after 
+ core database operations across models like user, session, account, and
+ verification*/
 import { betterAuth } from 'better-auth'; // better auth is not like authentication as a service
 import { mongodbAdapter } from 'better-auth/adapters/mongodb';
 import { MongoClient } from 'mongodb';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { initializeUserBoard } from '../server-helpers/init-user-board';
 //This page has nothing to do with connectDB() defined in ./mongo-db.ts
 
 //new
@@ -25,6 +29,16 @@ export const auth = betterAuth({
   //authentication method
   emailAndPassword: {
     enabled: true,
+  },
+  // this hook is like a trigger after operation on user collection (so we have access on user), do ...
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          if (user.id) await initializeUserBoard(user.id);
+        },
+      },
+    },
   },
 });
 
